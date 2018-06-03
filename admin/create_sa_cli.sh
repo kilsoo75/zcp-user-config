@@ -33,7 +33,7 @@ else
     kubectl config set-cluster --kubeconfig=./$CONFIG_FILE_NAME.conf $TENANT --server=$API_SERVER_ENDPOINT:$API_SERVER_PORT --certificate-authority=../ca-seo01-$TENANT.pem --embed-certs=true
     kubectl config set-context --kubeconfig=./$CONFIG_FILE_NAME.conf $TENANT --cluster=$TENANT
 
-    TOKEN_NAME=$(kubectl get sa -n $SA_NAME -o jsonpath="{.secrets[0].name}")
+    TOKEN_NAME=$(kubectl get sa -n zcp-system $SA_NAME -o jsonpath="{.secrets[0].name}")
     DECODED=$(kubectl get secret -n zcp-system $TOKEN_NAME -o jsonpath="{.data.token}" | base64 -D)
     kubectl config set-credentials --kubeconfig=./$CONFIG_FILE_NAME.conf $CREDENTIAL_NAME --token=$DECODED
 
