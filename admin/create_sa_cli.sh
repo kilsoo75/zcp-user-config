@@ -8,9 +8,10 @@ fi
 start=$1
 end=$2
 
-TENANT=zcp-dtlabs
-API_SERVER_ENDPOINT=https://169.56.69.242
-API_SERVER_PORT=31986
+#TENANT=zcp-dtlabs
+#API_SERVER_ENDPOINT=https://169.56.69.242
+#API_SERVER_PORT=31986
+. env.properties
 
 if [ "$start" -gt "$end" ]
 then
