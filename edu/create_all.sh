@@ -24,8 +24,8 @@ else
     CRB_NAME=zcp-system-crb-$USERNAME
     RB_NAME=zcp-system-rb-$USERNAME
 
-    LABEL_SYSTEM_USER=iam.cloudzcp.io/user=
-    LABEL_SYSTEM_USERNAME=iam.cloudzcp.io/username=
+    LABEL_SYSTEM_USER=iam.cloudzcp.io/user
+    LABEL_SYSTEM_USERNAME=iam.cloudzcp.io/username
 
     # ServiceAccount
     kubectl create serviceaccount $SA_NAME -n zcp-system
