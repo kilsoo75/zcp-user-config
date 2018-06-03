@@ -16,8 +16,12 @@ else
 
   for (( c=$start; c<=$end; c++ ))
   do  
-    echo "zcp-system zcp-edu-0$c token = "
-    TOKEN_NAME=$(kubectl get sa -n zcp-system zcp-edu-0$c -o jsonpath="{.secrets[0].name}")
+    # Define Variables
+    USERNAME=edu-0$c
+    SA_NAME=zcp-system-sa-$USERNAME
+
+    echo "zcp-system $SA_NAME token = "
+    TOKEN_NAME=$(kubectl get sa -n zcp-system $SA_NAME -o jsonpath="{.secrets[0].name}")
     DECODED=$(kubectl get secret -n zcp-system $TOKEN_NAME -o jsonpath="{.data.token}" | base64 -D)
     echo $DECODED
     echo "\r\n"

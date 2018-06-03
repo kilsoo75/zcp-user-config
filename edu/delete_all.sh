@@ -16,12 +16,20 @@ else
 
   for (( c=$start; c<=$end; c++ ))
   do  
-    kubectl delete rolebinding rb-zcp-edu-0$c-admin -n ns-zcp-edu-0$c
-    kubectl delete quota compute-resources -n ns-zcp-edu-0$c
-    kubectl delete limitranges mem-limit-range -n ns-zcp-edu-0$c
-    kubectl delete limitranges cpu-limit-range -n ns-zcp-edu-0$c
-    kubectl delete namespace ns-zcp-edu-0$c
-    kubectl delete serviceaccount zcp-edu-0$c -n zcp-system
+    # Define Variables
+    USERNAME=edu-0$c
+    USER_NAMESPACE=ns-zcp-$USERNAME
+
+    SA_NAME=zcp-system-sa-$USERNAME
+    CRB_NAME=zcp-system-crb-$USERNAME
+    RB_NAME=zcp-system-rb-$USERNAME
+
+    kubectl delete clusterrolebinding $CRB_NAME
+    kubectl delete quota compute-resources -n $USER_NAMESPACE
+    kubectl delete limitranges mem-limit-range -n $USER_NAMESPACE
+    kubectl delete limitranges cpu-limit-range -n $USER_NAMESPACE
+    kubectl delete namespace $USER_NAMESPACE
+    kubectl delete serviceaccount $SA_NAME -n zcp-system
     echo "....."
   done
 
