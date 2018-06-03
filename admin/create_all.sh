@@ -24,14 +24,17 @@ else
     CRB_NAME=zcp-system-crb-$USERNAME
     RB_NAME=zcp-system-rb-$USERNAME
 
+    LABEL_SYSTEM_USER=iam.cloudzcp.io/user=
+    LABEL_SYSTEM_USERNAME=iam.cloudzcp.io/username=
+
     # ServiceAccount
     kubectl create serviceaccount $SA_NAME -n zcp-system
-    kubectl label serviceaccount $SA_NAME zcp-system-user=true -n zcp-system
-    kubectl label serviceaccount $SA_NAME zcp-system-username=$USERNAME -n zcp-system
+    kubectl label serviceaccount $SA_NAME $LABEL_SYSTEM_USER=true -n zcp-system
+    kubectl label serviceaccount $SA_NAME $LABEL_SYSTEM_USERNAME=$USERNAME -n zcp-system
 
     # for kubeconfig ??
     SECRET_NAME=$(kubectl get serviceaccount -n zcp-system $SA_NAME -o jsonpath="{.secrets[0].name}")
-    kubectl label secret $SECRET_NAME zcp-system-username=$USERNAME -n zcp-system
+    kubectl label secret $SECRET_NAME $LABEL_SYSTEM_USERNAME=$USERNAME -n zcp-system
 
     # Quota & LimitRange
     kubectl create namespace $USER_NAMESPACE
@@ -41,11 +44,11 @@ else
     
     # ClusterRoleBiding
     kubectl create clusterrolebinding $CRB_NAME --clusterrole=cluster-admin --serviceaccount=zcp-system:$SA_NAME
-    kubectl label clusterrolebinding $CRB_NAME zcp-system-username=$USERNAME
+    kubectl label clusterrolebinding $CRB_NAME $LABEL_SYSTEM_USERNAME=$USERNAME
 
     # RoleBinding
     kubectl create rolebinding $RB_NAME --clusterrole=cluster-admin --serviceaccount=zcp-system:$SA_NAME -n ns-zcp-$USERNAME
-    kubectl label rolebinding $RB_NAME zcp-system-username=$USERNAME -n $USER_NAMESPACE
+    kubectl label rolebinding $RB_NAME $LABEL_SYSTEM_USERNAME=$USERNAME -n $USER_NAMESPACE
 
     echo ".............."
   done
