@@ -26,7 +26,7 @@ else
 
     # ServiceAccount
     kubectl create serviceaccount $SA_NAME -n zcp-system
-    kubectl label serviceaccount $SA_NAME zcp-system-user=yes -n zcp-system
+    kubectl label serviceaccount $SA_NAME zcp-system-user=true -n zcp-system
     kubectl label serviceaccount $SA_NAME zcp-system-username=$USERNAME -n zcp-system
 
     # for kubeconfig ??
