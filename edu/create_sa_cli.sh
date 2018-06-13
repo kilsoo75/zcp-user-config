@@ -5,13 +5,11 @@ if [ "x$1" = "x" ] || [ "x$2" = "x" ]; then
   exit 0
 fi
 
+# set variable
+. ../env.properties
+
 start=$1
 end=$2
-
-#TENANT=zcp-dtlabs
-#API_SERVER_ENDPOINT=https://169.56.69.242
-#API_SERVER_PORT=31986
-. ../env.properties
 
 if [ "$start" -gt "$end" ]
 then
@@ -30,7 +28,7 @@ else
     CONFIG_FILE_NAME=zcp-$USERNAME
     CREDENTIAL_NAME=zcp-$USERNAME@sk.com
 
-    kubectl config set-cluster --kubeconfig=../kubeconfig/$CONFIG_FILE_NAME.conf $TENANT --server=$API_SERVER_ENDPOINT:$API_SERVER_PORT --certificate-authority=../ca-seo01-$TENANT.pem --embed-certs=true
+    kubectl config set-cluster --kubeconfig=../kubeconfig/$CONFIG_FILE_NAME.conf $TENANT --server=$API_SERVER_ENDPOINT:$API_SERVER_PORT --certificate-authority=$CERTIFICATE_PATH/ca-seo01-$TENANT.pem --embed-certs=true
     kubectl config set-context --kubeconfig=../kubeconfig/$CONFIG_FILE_NAME.conf $TENANT --cluster=$TENANT
 
     TOKEN_NAME=$(kubectl get sa -n zcp-system $SA_NAME -o jsonpath="{.secrets[0].name}")
