@@ -8,3 +8,11 @@ spec:
     requests.memory: 5Gi
     limits.cpu: "8"
     limits.memory: 10Gi
+    configmaps: 100
+    persistentvolumeclaims: 100
+    pods: 100
+    resourcequotas: 100
+    services: 100
+    services.loadbalancers: 100
+    services.nodeports: 100
+    secrets: 100
